@@ -1,0 +1,8 @@
+.env
+cover.*
+test.*
+.idea
+test.env
+# config.json
+# config/
+*.exe

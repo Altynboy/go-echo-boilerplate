@@ -1,0 +1,12 @@
+{
+  "DB": {
+    "HOST": "localhost",
+    "PORT": "5432",
+    "DATABASE": "test",
+    "USERNAME": "postgres",
+    "PASSWORD": "123"
+  },
+  "JWT": {
+    "SECRET_KEY": "secret"
+  }
+}
