@@ -1,7 +1,7 @@
 package models
 
 import (
-	// "github.com/jinzhu/gorm"
+	// "gorm.io/gorm"
 	// uuid "github.com/satori/go.uuid"
 	"time"
 )
