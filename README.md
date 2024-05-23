@@ -125,7 +125,7 @@ Environment variables
 implement like this in `main.go`
 
 ```golang
-	os.Setenv("DB_HOST", cp.ConfigData.DB.HOST)
+    os.Setenv("DB_HOST", cp.ConfigData.DB.HOST)
     os.Setenv("DB_PORT", cp.ConfigData.DB.PORT)
     os.Setenv("DB_DATABASE", cp.ConfigData.DB.DATABASE)
     os.Setenv("DB_USERNAME", cp.ConfigData.DB.USERNAME)
