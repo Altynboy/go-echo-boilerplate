@@ -14,8 +14,8 @@ WORKDIR /app/postmanerator
 RUN go build
 
 # Add the Postman collection file to the container
-COPY UserAPI.postman_collection.json /app/postmanerator/mycollection.json
+COPY go-echo-boilerplate.postman_collection.json /app/postmanerator/mycollection.json
 
-COPY dev.postman_environment.json /app/to/environment.json
+# COPY dev.postman_environment.json /app/to/environment.json
 # Set the entrypoint to run Postmanerato
 ENTRYPOINT ["/app/postmanerator/postmanerator"]

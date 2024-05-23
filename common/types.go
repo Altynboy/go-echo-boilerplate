@@ -2,10 +2,11 @@ package common
 
 import (
 	"fmt"
-	"github.com/go-playground/validator"
-	"github.com/labstack/echo/v4"
 	_ "net/http"
 	"strings"
+
+	"github.com/go-playground/validator"
+	"github.com/labstack/echo/v4"
 )
 
 type (
@@ -37,9 +38,9 @@ type (
 )
 
 const (
-	Admin     UserRole = "ADMIN"
-	Moderator UserRole = "MODERATOR"
-	User UserRole = "USER"
+	Admin     	UserRole = "ADMIN"
+	Moderator 	UserRole = "MODERATOR"
+	User 		UserRole = "USER"
 )
 
 func (ve ValidationErrors) Error() string {
