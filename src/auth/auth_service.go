@@ -2,13 +2,12 @@ package auth
 
 import (
 	"go-echo-boilerplate/common"
-	config "go-echo-boilerplate/setup"
 	UserModels "go-echo-boilerplate/src/models/users/model"
-	"os"
 	"sync"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/spf13/viper"
 )
 
 type authService struct{}
@@ -34,14 +33,16 @@ type AuthService interface {
 }
 
 func (s *authService) GetAccessToken(user *UserModels.User) (string, error) {
+	expTime := viper.GetInt("Jwt.ExpTime")
+	sign := viper.GetString("Jwt.SecretKey")
 	claims := &common.JwtCustomClaims{
 		Id:   user.ID,
 		Role: user.Role,
 		RegisteredClaims: jwt.RegisteredClaims{
-			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Hour * config.TokenExpiresIn)),
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Hour * time.Duration(expTime))),
 		},
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	return token.SignedString([]byte(os.Getenv("JWT_SECRET_KEY")))
+	return token.SignedString([]byte(sign))
 }

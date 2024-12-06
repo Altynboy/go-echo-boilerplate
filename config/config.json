@@ -8,6 +8,7 @@
     "SslMode": "disable"
   },
   "Jwt": {
-    "SecretKey": "secret"
+    "SecretKey": "secret_key",
+    "ExpTime": 3
   }
 }
