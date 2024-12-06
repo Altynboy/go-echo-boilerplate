@@ -3,6 +3,7 @@ package config
 import (
 	"os"
 )
+
 type Database interface{}
 
 type PsqlDbConnection struct {
@@ -11,7 +12,7 @@ type PsqlDbConnection struct {
 	DbDatabase string
 	DbUsername string
 	DbPassword string
-	DbSslmode string
+	DbSslmode  string
 }
 
 type DatabaseConfig struct {
@@ -27,7 +28,7 @@ func DatabaseNew() Database {
 			DbDatabase: os.Getenv("DB_DATABASE"),
 			DbUsername: os.Getenv("DB_USERNAME"),
 			DbPassword: os.Getenv("DB_PASSWORD"),
-			DbSslmode: "disable",
+			DbSslmode:  "disable",
 		},
 		// Psql: PsqlDbConnection{
 		// 	DbHost:     os.Getenv("DB_HOST"),

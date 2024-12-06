@@ -1,12 +1,13 @@
 {
-  "DB": {
-    "HOST": "localhost",
-    "PORT": "5432",
-    "DATABASE": "test",
-    "USERNAME": "postgres",
-    "PASSWORD": "123"
+  "Db": {
+    "Host": "localhost",
+    "Port": "5432",
+    "Name": "test",
+    "User": "postgres",
+    "Password": "123",
+    "SslMode": "disable"
   },
-  "JWT": {
-    "SECRET_KEY": "secret"
+  "Jwt": {
+    "SecretKey": "secret"
   }
 }
