@@ -3,10 +3,11 @@
 This boilerplate is designed to provide a quick start for production ready web application development using the Echo framework in Go. It includes implementations for CRUD operations, JWT authentication, user roles, and more.
 
 <p align="center">
-    <img src="https://img.shields.io/badge/golang-v1.22-lightblue" height="25"/>
-    <img src="https://img.shields.io/badge/echo-v4.12-blue" height="25"/>
+    <img src="https://img.shields.io/badge/golang-v1.23-lightblue" height="25"/>
+    <img src="https://img.shields.io/badge/echo-v4.13-blue" height="25"/>
     <img src="https://img.shields.io/badge/gorm-v1.25-green" height="25"/>
     <img src="https://img.shields.io/badge/echo--jwt-v1.25-blue" height="25"/>
+    <img src="https://img.shields.io/badge/conf-viper-%66bc67" height="25"/>
     <img src="https://img.shields.io/badge/db-postgres-%23336791" height="25"/>
 </p>
 
