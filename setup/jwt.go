@@ -1,4 +1,4 @@
 package config
 
 // specify token expire hours
-const TokenExpiresIn = 3 
+const TokenExpiresIn = 3

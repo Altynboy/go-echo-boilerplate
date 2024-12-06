@@ -18,29 +18,27 @@ type (
 		Title   string `json:"Title" validate:"required"`
 		Content string `json:"Content" validate:"required"`
 	}
-
-	
 )
 
 func (controller BlogController) Routes() []common.Route {
 	return []common.Route{
 		{
-			Method:  echo.GET,
-			Path:    "/blogs",
-			Handler: controller.GetBlogs,
+			Method:     echo.GET,
+			Path:       "/blogs",
+			Handler:    controller.GetBlogs,
 			Middleware: []echo.MiddlewareFunc{common.JwtMiddleWare()},
 		},
 		{
-			Method:  echo.POST,
-			Path:    "/blog",
-			Handler: controller.CreateBlog,
+			Method:     echo.POST,
+			Path:       "/blog",
+			Handler:    controller.CreateBlog,
 			Middleware: []echo.MiddlewareFunc{common.JwtMiddleWare()},
 		},
 	}
 }
 
 func (controller BlogController) GetBlogs(ctx echo.Context) error {
-	db := database.GetInstance()
+	db := database.Instance()
 	var blogs []BlogModel.Blog
 
 	token, ok := ctx.Get("user").(*jwt.Token)
@@ -71,7 +69,7 @@ func (controller BlogController) CreateBlog(ctx echo.Context) error {
 	if err := ctx.Validate(params); err != nil {
 		return wrapper.Response(ctx, http.StatusBadRequest, err.Error())
 	}
-	
+
 	token, ok := ctx.Get("user").(*jwt.Token)
 	if !ok {
 		return wrapper.Response(ctx, http.StatusUnauthorized, "Invalid token")
@@ -81,7 +79,7 @@ func (controller BlogController) CreateBlog(ctx echo.Context) error {
 		return wrapper.Response(ctx, http.StatusUnauthorized, "Invalid token")
 	}
 
-	db := database.GetInstance()
+	db := database.Instance()
 	res := db.Create(&BlogModel.Blog{
 		UserId:  claims.Id,
 		Title:   params.Title,
@@ -90,9 +88,9 @@ func (controller BlogController) CreateBlog(ctx echo.Context) error {
 	if res.Error != nil {
 		return wrapper.Response(ctx, http.StatusInternalServerError, res.Error.Error())
 	}
-	if res.RowsAffected == 0{
+	if res.RowsAffected == 0 {
 		return wrapper.Response(ctx, http.StatusInternalServerError, "Failed to create blog")
 	}
-	
+
 	return wrapper.Response(ctx, http.StatusOK, "Success")
 }

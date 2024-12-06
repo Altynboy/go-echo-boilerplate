@@ -8,11 +8,11 @@ import (
 
 type ConfigModel struct {
 	DB struct {
-		HOST   string `json:"HOST"`
-		USERNAME   string `json:"USERNAME"`
+		HOST     string `json:"HOST"`
+		USERNAME string `json:"USERNAME"`
 		DATABASE string `json:"DATABASE"`
 		PASSWORD string `json:"PASSWORD"`
-		PORT   string    `json:"PORT"`
+		PORT     string `json:"PORT"`
 	} `json:"DB"`
 	JWT struct {
 		SECRET_KEY string `json:"SECRET_KEY"`
@@ -24,7 +24,6 @@ var ConfigData ConfigModel
 func Config() *ConfigModel {
 	return &ConfigModel{}
 }
-
 
 func (*ConfigModel) Init(fileName string) error {
 
@@ -42,4 +41,3 @@ func (*ConfigModel) Init(fileName string) error {
 
 	return nil
 }
-

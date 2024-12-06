@@ -31,15 +31,14 @@ func SetUsersService(service UsersService) UsersService {
 
 type UsersService interface {
 	FindUserByPhone(phone string) (*model.User, error)
-	AddUser( phone string, password string) (*model.User, error)
-	ChangePwd( phone string, password string) (*model.User, error)
-	FindUserById( id uint) (*model.User, error)
+	AddUser(phone string, password string) (*model.User, error)
+	ChangePwd(phone string, password string) (*model.User, error)
+	FindUserById(id uint) (*model.User, error)
 	IsPhoneExist(phone string) bool
 }
 
-
 func (u *usersService) FindUserByPhone(phone string) (*model.User, error) {
-	db := database.GetInstance()
+	db := database.Instance()
 	var user model.User
 	res := db.First(&user, "phone = ?", phone)
 	if res.Error != nil {
@@ -51,8 +50,8 @@ func (u *usersService) FindUserByPhone(phone string) (*model.User, error) {
 	return &user, nil
 }
 
-func (u *usersService) AddUser( phone string, password string) (*model.User, error) {
-	db := database.GetInstance()
+func (u *usersService) AddUser(phone string, password string) (*model.User, error) {
+	db := database.Instance()
 	user := model.User{
 		Role:     common.User,
 		Phone:    phone,
@@ -75,7 +74,7 @@ func (u *usersService) AddUser( phone string, password string) (*model.User, err
 }
 
 func (u *usersService) ChangePwd(phone string, password string) (*model.User, error) {
-	db := database.GetInstance()
+	db := database.Instance()
 	var user model.User
 
 	res := db.First(&user, "phone = ?", phone)
@@ -96,22 +95,21 @@ func (u *usersService) ChangePwd(phone string, password string) (*model.User, er
 }
 
 func (u *usersService) FindUserById(id uint) (*model.User, error) {
-	db := database.GetInstance()
+	db := database.Instance()
 	var user model.User
 
 	res := db.First(&user, "id = ?", id)
 	if res.Error != nil || res.RowsAffected != 1 {
 		return nil, errors.New("user not found")
 	}
-	
+
 	return &user, nil
 }
 
-
 func (u *usersService) IsPhoneExist(phone string) bool {
-	db := database.GetInstance()
+	db := database.Instance()
 	var user model.User
-	
+
 	res := db.First(&user, "phone = ?", phone)
 	if res.Error != nil || res.RowsAffected != 1 {
 		return false

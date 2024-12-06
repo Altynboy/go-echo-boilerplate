@@ -38,9 +38,9 @@ type (
 )
 
 const (
-	Admin     	UserRole = "ADMIN"
-	Moderator 	UserRole = "MODERATOR"
-	User 		UserRole = "USER"
+	Admin     UserRole = "ADMIN"
+	Moderator UserRole = "MODERATOR"
+	User      UserRole = "USER"
 )
 
 func (ve ValidationErrors) Error() string {

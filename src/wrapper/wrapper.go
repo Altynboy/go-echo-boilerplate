@@ -7,7 +7,7 @@ import (
 )
 
 type SuccessResponse struct {
-	Success bool `json:"Success"`
+	Success bool        `json:"Success"`
 	Message string      `json:"Message"`
 	Data    interface{} `json:"Data"`
 }

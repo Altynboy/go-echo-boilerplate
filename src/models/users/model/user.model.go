@@ -10,17 +10,17 @@ import (
 
 type User struct {
 	CommonModels.Base
-	Phone string `gorm:"type:character varying(12);unique_index"`
-	Role     common.UserRole
-	Password string
-	FirstName string
-	LastName string
+	Phone      string `gorm:"type:character varying(12);unique_index"`
+	Role       common.UserRole
+	Password   string
+	FirstName  string
+	LastName   string
 	MiddleName string
-	Email string
+	Email      string
 }
 
 func (User) TableName() string {
-    return "users"
+	return "users"
 }
 
 // func (user User) String() string {

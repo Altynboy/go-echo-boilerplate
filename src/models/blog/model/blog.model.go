@@ -4,7 +4,6 @@ import (
 	CommonModels "go-echo-boilerplate/common/models"
 )
 
-
 type Blog struct {
 	CommonModels.Base
 	UserId  uint   `gorm:"type:integer"`

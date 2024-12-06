@@ -2,11 +2,11 @@ package database
 
 import (
 	"fmt"
-	config "go-echo-boilerplate/setup"
 	"log"
 	"sync"
 	"time"
 
+	"github.com/spf13/viper"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -15,41 +15,35 @@ var onceDb sync.Once
 
 var instance *gorm.DB
 
-func GetInstance() *gorm.DB {
+func Init() {
 	onceDb.Do(func() {
-		databaseConfig := config.DatabaseNew().(*config.DatabaseConfig)
 		db, err := gorm.Open(postgres.New(postgres.Config{
-		DSN: fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=%s",
-			databaseConfig.Psql.DbHost,
-			databaseConfig.Psql.DbPort,
-			databaseConfig.Psql.DbUsername,
-			databaseConfig.Psql.DbDatabase,
-			databaseConfig.Psql.DbPassword,
-			databaseConfig.Psql.DbSslmode),
-		}), &gorm.Config{})
-		// 	, fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=%s",
-		// 	databaseConfig.Psql.DbHost,
-		// 	databaseConfig.Psql.DbPort,
-		// 	databaseConfig.Psql.DbUsername,
-		// 	databaseConfig.Psql.DbDatabase,
-		// 	databaseConfig.Psql.DbPassword,
-		// 	databaseConfig.Psql.DbSslmode,
-		// ))
+			DSN: fmt.Sprintf("host=%s port=%s dbname=%s user=%s password=%s sslmode=%s",
+				viper.GetString("Db.Host"),
+				viper.GetString("Db.Port"),
+				viper.GetString("Db.Name"),
+				viper.GetString("Db.User"),
+				viper.GetString("Db.Password"),
+				viper.GetString("Db.SslMode"),
+			)}), &gorm.Config{})
 		if err != nil {
-			fmt.Println("Could not connect to database :%v", err)
 			log.Fatalf("Could not connect to database :%v", err)
-			panic(0)
 		}
+
 		dbCon, err := db.DB()
+		if err != nil {
+			log.Fatalf("Could not get DB instance: %v", err)
+		}
 
 		dbCon.SetMaxIdleConns(10)
-
 		dbCon.SetMaxOpenConns(100)
-
 		dbCon.SetConnMaxLifetime(time.Hour)
 
-		fmt.Println("Database connection initialized successfully")	
+		fmt.Println("Database connection initialized successfully")
 		instance = db
 	})
+}
+
+func Instance() *gorm.DB {
 	return instance
 }
