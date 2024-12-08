@@ -110,28 +110,41 @@ Environment variables
 
 ```json
 {
-  "DB": {
-    "HOST": "localhost",
-    "PORT": "5432",
-    "DATABASE": "test",
-    "USERNAME": "postgres",
-    "PASSWORD": "123"
+  "Db": {
+    "Host": "localhost",
+    "Port": "5432",
+    "Name": "test",
+    "User": "postgres",
+    "Password": "123",
+    "SslMode": "disable"
   },
-  "JWT": {
-    "SECRET_KEY": "secret"
+  "Jwt": {
+    "SecretKey": "secret_key",
+    "ExpTime": 3
   }
 }
 ```
 
-implement like this in `main.go`
+implement like this using `viper` in `main.go`
 
 ```golang
-os.Setenv("DB_HOST", cp.ConfigData.DB.HOST)
-os.Setenv("DB_PORT", cp.ConfigData.DB.PORT)
-os.Setenv("DB_DATABASE", cp.ConfigData.DB.DATABASE)
-os.Setenv("DB_USERNAME", cp.ConfigData.DB.USERNAME)
-os.Setenv("DB_PASSWORD", cp.ConfigData.DB.PASSWORD)
-os.Setenv("JWT_SECRET_KEY", cp.ConfigData.JWT.SECRET_KEY)
+func initConfig() error {
+	viper.AddConfigPath("config")
+	viper.SetConfigName("config")
+	return viper.ReadInConfig()
+}
+
+//... somewherre in your code
+// example loading database config envs
+db, err := gorm.Open(postgres.New(postgres.Config{
+  DSN: fmt.Sprintf("host=%s port=%s dbname=%s user=%s password=%s sslmode=%s",
+    viper.GetString("Db.Host"),
+    viper.GetString("Db.Port"),
+    viper.GetString("Db.Name"),
+    viper.GetString("Db.User"),
+    viper.GetString("Db.Password"),
+    viper.GetString("Db.SslMode"),
+  )}), &gorm.Config{})
 ```
 
 ### Postman Collection with Environment Setup
@@ -142,7 +155,7 @@ A Postman collection (`_postman` folder) is provided to facilitate testing of th
 
 ### Prerequisites
 
-- Go (version 1.18+)
+- Go (version 1.23+)
 - Postman (optional, for testing API endpoints)
 
 ### Installation
@@ -159,15 +172,17 @@ A Postman collection (`_postman` folder) is provided to facilitate testing of th
 3. **Setup env variables** in `config.json`
    ```json
    {
-     "DB": {
-       "HOST": "localhost",
-       "PORT": "5432",
-       "DATABASE": "test",
-       "USERNAME": "postgres",
-       "PASSWORD": "123"
+     "Db": {
+       "Host": "localhost",
+       "Port": "5432",
+       "Name": "test",
+       "User": "postgres",
+       "Password": "123",
+       "SslMode": "disable"
      },
-     "JWT": {
-       "SECRET_KEY": "secret"
+     "Jwt": {
+       "SecretKey": "secret_key",
+       "ExpTime": 3
      }
    }
    ```
